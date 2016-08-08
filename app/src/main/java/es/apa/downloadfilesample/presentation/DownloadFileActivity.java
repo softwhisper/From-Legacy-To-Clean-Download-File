@@ -32,6 +32,8 @@ import es.apa.downloadfilesample.infrastructure.disk.DiskStateAdapter;
 import es.apa.downloadfilesample.infrastructure.network.DowloadFile;
 import es.apa.downloadfilesample.infrastructure.permissions.Permissions;
 
+//TODO: si se queda a medias no se borra el fichero....
+//TODO: geny peta en casi de uso: boolean create = file.createNewFile();, falta el mkdirs.....!!!!boolean createdDir = rootFolder.mkdirs(); esta hecho en el onCreate
 public class DownloadFileActivity
         extends AppCompatActivity
         implements View.OnClickListener{
@@ -49,6 +51,7 @@ public class DownloadFileActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_file);
+        boolean createdDir = rootFolder.mkdirs();
         Disk disk = new Disk();
         es.apa.downloadfilesample.application.Disk.Accesor accesor = new DiskAdapter(disk);
         DiskState diskState = new DiskState();
@@ -123,21 +126,43 @@ public class DownloadFileActivity
     //  -> no se borra el fichero si se cancela y se queda a medias
     //  -> se abre una activity aunque navegemos fuera de la actual.
     //TODO: not tested before change byteArray...pending
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public class DownloadThread extends Thread {
-
-
         private String DownloadUrl;
         private String fileName;
-
-
         public DownloadThread(String downloadUrl, String fileName) {
             super();
             DownloadUrl = downloadUrl;
             this.fileName = fileName;
         }
-
-
-        // After call for background.start this run method call
         public void run() {
             try {
                 runOnUiThread(new Runnable() {
@@ -146,9 +171,7 @@ public class DownloadFileActivity
                         progressBar.setVisibility(View.VISIBLE);
                     }
                 });
-
                 File root = android.os.Environment.getExternalStorageDirectory();
-
                 File dir = new File (root.getAbsolutePath() + "/xmls");
                 if(dir.exists()==false) {
                     dir.mkdirs();
@@ -157,30 +180,18 @@ public class DownloadFileActivity
                 URL url = new URL(DownloadUrl); //you can write here any link
                 File file = new File(dir, fileName);
 
-                long startTime = System.currentTimeMillis();
-                Log.d("DownloadManager", "download begining");
-                Log.d("DownloadManager", "download url:" + url);
-                Log.d("DownloadManager", "downloaded file name:" + fileName);
-
-				/* Open a connection to that URL. */
                 URLConnection ucon = url.openConnection();
 
-				/*
-				 * Define InputStreams to read from the URLConnection.
-				 */
                 InputStream is = ucon.getInputStream();
                 BufferedInputStream bis = new BufferedInputStream(is);
                 FileOutputStream fos = new FileOutputStream(file);
-
                 int current = 0;
                 while ((current = bis.read()) != -1) {
                     fos.write(current);
                 }
 
-                fos.close();
                 fos.flush();
                 fos.close();
-                Log.d("DownloadManager", "download ready in" + ((System.currentTimeMillis() - startTime) / 1000) + " sec");
                 Intent intent2 = new Intent(DownloadFileActivity.this, PdfViewerActivity.class);
                 intent2.putExtra("pdf", file.getAbsolutePath());
                 startActivity(intent2);

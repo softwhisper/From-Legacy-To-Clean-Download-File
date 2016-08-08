@@ -39,13 +39,11 @@ public class DownloadFileUseCase implements DownloadFile.UseCase {
             @Override
             public void run() {
                 try {
-                    if (file.exists() && file.length() > 0) {
+                    if (!diskState.isExternalStorageReadable()) {
+                        sendError(new StorateNotReadyException());
+                    } else if (file.exists() && file.length() > 0) {
                         //read
-                        if (diskState.isExternalStorageReadable()) {
-                            sendSuccess(file);
-                        } else {
-                            sendError(new StorateNotReadyException());
-                        }
+                        sendSuccess(file);
                     } else {
                         //write
                         if (diskState.isExternalStorageWritable()) {

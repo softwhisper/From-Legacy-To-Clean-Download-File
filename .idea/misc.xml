@@ -35,33 +35,18 @@
             <id />
           </State>
           <State>
-            <id>Class structureJava</id>
+            <id>Control FlowGroovy</id>
           </State>
           <State>
-            <id>Code maturity issuesJava</id>
+            <id>Groovy</id>
           </State>
           <State>
-            <id>Java</id>
-          </State>
-          <State>
-            <id>Java language level migration aidsJava</id>
-          </State>
-          <State>
-            <id>Javadoc issuesJava</id>
-          </State>
-          <State>
-            <id>Performance issuesJava</id>
-          </State>
-          <State>
-            <id>TestNGJava</id>
-          </State>
-          <State>
-            <id>Threading issuesJava</id>
+            <id>Potentially confusing code constructsGroovy</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Android</id>
+            <id>GroovyReturnFromClosureCanBeImplicit</id>
           </State>
         </selected-state>
       </profile-state>
@@ -82,5 +67,21 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
